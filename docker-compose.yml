@@ -3,12 +3,12 @@ services:
         image: mysql
         ports: 
             - 3376:3306
-        command: --default-authentication-plugin=mysql_native_password
+        command: --default-authentication-plugin=caching_sha2_password
         environment:
-            MYSQL_DATABASE: resource
-            MYSQL_USER: resource
-            MYSQL_PASSWORD: resource
-            MYSQL_ROOT_PASSWORD: resource
+            MYSQL_DATABASE: ${MYSQL_DB}
+            MYSQL_USER: ${MYSQL_DB}
+            MYSQL_PASSWORD: ${MYSQL_PW}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PW}
         env_file: .env
         volumes:
             - persistent:/var/lib/mysql
@@ -21,6 +21,7 @@ services:
             - 8090:80
         volumes:
             - www-data:/var/www/html
+            - ./media:/var/www/html/filestore
         links:
             - db
         networks:
@@ -33,10 +34,10 @@ services:
         ports:
             - 8000:80
         environment:
-            MYSQL_DATABASE: resource
-            MYSQL_USER: resource
-            MYSQL_PASSWORD: resource
-            MYSQL_ROOT_PASSWORD: resource
+            MYSQL_DATABASE: ${MYSQL_DB}
+            MYSQL_USER: ${MYSQL_DB}
+            MYSQL_PASSWORD: ${MYSQL_PW}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PW}
 volumes:
     persistent:
     www-data:

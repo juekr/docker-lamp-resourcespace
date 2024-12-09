@@ -29,3 +29,11 @@ Das `/var/www/html`-Webseiten-Root-Verzeichnis wird in ein persistentes Volume a
 Wird gemappt auf: `http://localhost:8090/`.
 
 Die meisten Konfigurationsvariablen werden über die `uploads.ini` angepasst, sodass bei der Installation keine Fehler geworfen werden. Ein Problem beleibt aber bestehen: als `Basis URL` müsste man etwas eintragen, das im und außerhalb vom Container funktioniert. `http://www` lässt die Installation durchlaufen, führt beim Aufrufen später aber zu Fehlern. Die Lösung kann sein: `http://${IP_DES_HOSTS}:8090`.
+
+Nach Aufrufen von `http://localhost:8090` braucht es folgende Angaben:
+- Database server: `db`
+- Database: `${MYSQL_DB}`
+- Database user: `${MYSQL_DB}`
+- Database user password: `${MYSQL_PW}`
+- Database read-only credentials: leave blank
+- Base URL: `${HOST_IP_ADDRESS}:8090`
