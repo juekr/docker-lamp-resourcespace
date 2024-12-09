@@ -1,31 +1,31 @@
-Watch the video 👇
+# docker-lamp-resoucespace
 
-[![Watch the video](https://img.youtube.com/vi/v-r_12oezds/maxresdefault.jpg)](https://youtu.be/v-r_12oezds)
+Docker with Apache, MySQL 8.3.1, PHPMyAdmin, PHP (including some important PHP extensions) and ResourceSpace.
 
-# docker-lamp
-
-Docker with Apache, MySQL 8.0, PHPMyAdmin and PHP.
-
-I use docker-compose as an orchestrator. To run these containers:
+To run these containers:
 
 ```
 docker-compose up -d
 ```
 
 Open phpmyadmin at [http://127.0.0.1:8000](http://127.0.0.1:8000)
-Open web browser to look at a simple php example at [http://127.0.0.1:80](http://127.0.0.1:80)
-
-Clone YourProject on `www/` and then, open web [http://127.0.0.1/YourProject](http://127.0.0.1/YourProject)
+Open web browser to look at a simple php example at [http://127.0.0.1:8090](http://127.0.0.1:8090)
 
 Run MySQL client:
 
 - `docker-compose exec db mysql -u root -p` 
 
-Infrastructure as code!
 
-You can read this a Spanish article in Crashell platform: [Apache, PHP, MySQL y PHPMyAdmin con Docker LAMP](https://www.crashell.com/estudio/apache_php_mysql_y_phpmyadmin_con_docker_lamp).
+## ResourceSpace
 
+### Folders
 
-### Infrastructure model
+ResourceSpace ist unter dem Root-Verzeichnis `/` (⬅️ `/var/www/html`) verfügbar.
 
-![Infrastructure model](.infragenie/infrastructure_model.png)
+Das `/var/www/html`-Webseiten-Root-Verzeichnis wird in ein persistentes Volume abgelegt. Es als bind mount einzubinden, führt dazu, dass es im Container leer ist (eine Möglichkeit, das Container-Verzeichnis nach außen "freizugeben" gibt es wohl nicht).
+
+### Setup
+
+Wird gemappt auf: `http://localhost:8090/`.
+
+Die meisten Konfigurationsvariablen werden über die `uploads.ini` angepasst, sodass bei der Installation keine Fehler geworfen werden. Ein Problem beleibt aber bestehen: als `Basis URL` müsste man etwas eintragen, das im und außerhalb vom Container funktioniert. `http://www` lässt die Installation durchlaufen, führt beim Aufrufen später aber zu Fehlern. Die Lösung kann sein: `http://${IP_DES_HOSTS}:8090`.

@@ -42,7 +42,7 @@ RUN set -xe \
 
 RUN docker-php-ext-install intl opcache intl zip calendar dom mbstring gd
 
-RUN apt-get -yqq install ffmpeg exiftool ghostscript
+RUN apt-get -yqq install ffmpeg exiftool ghostscript default-mysql-client
 RUN docker-php-ext-configure exif
 RUN docker-php-ext-install exif
 RUN docker-php-ext-enable exif
@@ -51,5 +51,8 @@ RUN a2enmod rewrite
 
 WORKDIR /var/www/html/
 RUN svn co https://svn.resourcespace.com/svn/rs/releases/10.5_RC/ .
+
+COPY ./ini/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
+RUN chmod 777 /var/www/html/include
 
 EXPOSE 80
